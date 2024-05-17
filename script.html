@@ -1,0 +1,382 @@
+<style>
+svg #southeast-progress-car, 
+svg #pacific-northwest-progress-car,
+svg #new-england-progress-car,
+svg #appalachia-progress-car,
+svg #southwest-progress-car,
+svg #florida-progress-car,
+svg #midwest-progress-car,
+svg #california-progress-car,
+svg #mid-atlantic-progress-car,
+svg #mountain-west-progress-car,
+#southeast-headline,
+#pacific-northwest-headline,
+#new-england-headline,
+#appalachia-headline,
+#southwest-headline,
+#florida-headline,
+#midwest-headline,
+#california-headline,
+#mid-atlantic-headline,
+#mountain-west-headline,
+#southeast-fact,
+#pacific-northwest-fact,
+#new-england-fact,
+#appalachia-fact,
+#southwest-fact,
+#florida-fact,
+#midwest-fact,
+#california-fact,
+#mid-atlantic-fact,
+#mountain-west-fact
+
+
+{
+   display: none;
+}
+
+#map-box svg {
+    width:580px;
+}
+
+    #progress svg {
+	    width: 100%;
+	}
+
+.current-headline {
+	display: inline!important;
+}
+
+.current-fact {
+	display: flex!important;
+}
+
+
+.current-progress {
+    display: block!important;
+}
+
+.current-shape {
+    fill: #61a60e!important;
+}
+
+.past-shape {
+    fill: #16478E!important;
+}
+
+	.current-region-shape {
+	fill: #61a60e!important; <!-- GREEN -->
+	}
+
+	.current-region-shape:hover {
+	fill: #549309!important;
+	}
+
+	.current-region-title path {
+	fill: #ffcf06!important; <!-- YELLOW -->	
+	}
+
+	.current-region-title-outline, .current-region-title-outline path, .current-region-title-outline polygon {
+	fill: #16478e!important; <!-- BLUE -->	
+	}
+
+	.active-region-shape {
+	fill: #16478e!important; 
+	}
+
+	.active-region-shape:hover {
+	fill: #00377c!important;
+	}
+
+	.active-region-title path {
+	fill: #ffcf06!important; <!-- YELLOW -->
+	}
+	
+	.active-region-title-outline, .active-region-title-outline path, .active-region-title-outline polygon {
+	fill: #16478e!important; <!-- BLUE -->
+	}
+
+
+	.text{fill:#FFFFFF;}
+ 	.st0{fill:#CCCCCC;}
+	.st1{fill:#16478E;}
+    .st2{fill:#D5BB88;}
+	.st3{fill:#5D7069;}
+	.st4{fill:#C3E7F7;}
+	.st5{fill:#DCDCDC;}
+	.st6{fill:#AADDF3;}
+	.st7{fill:#414141;}
+	.st8{fill:#EE4037;}
+	.st9{fill:#4D5159;}
+	.st10{fill:#919395;}
+	.st11{fill:#F1F1F1;}
+	.st12{fill:#F6EECA;}
+	.st13{fill:#736458;}
+	.st14{fill:#C0E6F3;}
+
+
+</style>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+
+//  ------------>>>>  CHANGE DATE HERE  <<<<<------------
+
+	var startDate = new Date('March 09, 2024 00:01:00');
+
+	var southeastStart = new Date(startDate);
+	var southeastEnd = new Date(southeastStart);
+	southeastEnd.setDate(southeastEnd.getDate() + 7);
+	
+	var pacificnorthwestStart = new Date(startDate);
+	pacificnorthwestStart.setDate(pacificnorthwestStart.getDate() + 7);
+	var pacificnorthwestEnd = new Date(southeastEnd);
+	pacificnorthwestEnd.setDate(pacificnorthwestEnd.getDate() + 7);
+	
+	var newenglandStart = new Date(startDate);
+	newenglandStart.setDate(newenglandStart.getDate() + 14);
+	var newenglandEnd = new Date(southeastEnd);
+	newenglandEnd.setDate(newenglandEnd.getDate() + 14);
+		
+	var appalachiaStart = new Date(startDate);
+	appalachiaStart.setDate(appalachiaStart.getDate() + 21);
+	var appalachiaEnd = new Date(southeastEnd);
+	appalachiaEnd.setDate(appalachiaEnd.getDate() + 21);
+		
+	var southwestStart = new Date(startDate);
+	southwestStart.setDate(southwestStart.getDate() + 28);
+	var southwestEnd = new Date(southeastEnd);
+	southwestEnd.setDate(southwestEnd.getDate() + 28);
+		
+	var floridaStart = new Date(startDate);
+	floridaStart.setDate(floridaStart.getDate() + 35);
+	var floridaEnd = new Date(southeastEnd);
+	floridaEnd.setDate(floridaEnd.getDate() + 35);
+		
+	var midwestStart = new Date(startDate);
+	midwestStart.setDate(midwestStart.getDate() + 42);
+	var midwestEnd = new Date(southeastEnd);
+	midwestEnd.setDate(midwestEnd.getDate() + 42);
+		
+	var californiaStart = new Date(startDate);
+	californiaStart.setDate(californiaStart.getDate() + 49);
+	var californiaEnd = new Date(southeastEnd);
+	californiaEnd.setDate(californiaEnd.getDate() + 49);
+		
+	var midatlanticStart = new Date(startDate);
+	midatlanticStart.setDate(midatlanticStart.getDate() + 56);
+	var midatlanticEnd = new Date(southeastEnd);
+	midatlanticEnd.setDate(midatlanticEnd.getDate() + 56);
+		
+	var mountainwestStart = new Date(startDate);
+	mountainwestStart.setDate(mountainwestStart.getDate() + 63);
+	var mountainwestEnd = new Date(southeastEnd);
+	mountainwestEnd.setDate(mountainwestEnd.getDate() + 63);
+
+
+	jQuery(document).ready(function($) {
+
+	    var elements = [
+	        {factId: '#southeast-fact',  headlineId: '#southeast-headline', carId: '#southeast-progress-car', shapeId: '#southeast-progress-shape', regionId: '#shape-southeast', outlineId: '#title-southeast-outline', titleId: '#title-southeast', start: southeastStart, end: southeastEnd },
+	        {factId: '#pacific-northwest-fact',  headlineId: '#pacific-northwest-headline', carId: '#pacific-northwest-progress-car', shapeId: '#pacific-northwest-progress-shape', regionId: '#shape-pacific-northwest', outlineId: '#title-pacific-northwest-outline', titleId: '#title-pacific-northwest', start: pacificnorthwestStart, end: pacificnorthwestEnd },
+	        {factId: '#new-england-fact',  headlineId: '#new-england-headline', carId: '#new-england-progress-car', shapeId: '#new-england-progress-shape', regionId: '#shape-new-england', outlineId: '#title-new-england-outline', titleId: '#title-new-england', start: newenglandStart, end: newenglandEnd },
+	        {factId: '#appalachia-fact',  headlineId: '#appalachia-headline', carId: '#appalachia-progress-car', shapeId: '#appalachia-progress-shape', regionId: '#shape-appalachia', outlineId: '#title-appalachia-outline', titleId: '#title-appalachia', start: appalachiaStart, end: appalachiaEnd },
+	        {factId: '#southwest-fact',  headlineId: '#southwest-headline', carId: '#southwest-progress-car', shapeId: '#southwest-progress-shape', regionId: '#shape-southwest', outlineId: '#title-southwest-outline', titleId: '#title-southwest', start: southwestStart, end: southwestEnd },
+	        {factId: '#florida-fact',  headlineId: '#florida-headline', carId: '#florida-progress-car', shapeId: '#florida-progress-shape', regionId: '#shape-florida', outlineId: '#title-florida-outline', titleId: '#title-florida', start: floridaStart, end: floridaEnd },
+	        {factId: '#midwest-fact',  headlineId: '#midwest-headline', carId: '#midwest-progress-car', shapeId: '#midwest-progress-shape', regionId: '#shape-midwest', outlineId: '#title-midwest-outline', titleId: '#title-midwest', start: midwestStart, end: midwestEnd },
+	        {factId: '#california-fact',  headlineId: '#california-headline', carId: '#california-progress-car', shapeId: '#california-progress-shape', regionId: '#shape-california', outlineId: '#title-california-outline', titleId: '#title-california', start: californiaStart, end: californiaEnd },
+	        {factId: '#mid-atlantic-fact',  headlineId: '#mid-atlantic-headline', carId: '#mid-atlantic-progress-car', shapeId: '#mid-atlantic-progress-shape', regionId: '#shape-mid-atlantic', outlineId: '#title-mid-atlantic-outline', titleId: '#title-mid-atlantic', start: midatlanticStart, end: midatlanticEnd },
+	        {factId: '#mountain-west-fact',  headlineId: '#mountain-west-headline', carId: '#mountain-west-progress-car', shapeId: '#mountain-west-progress-shape', regionId: '#shape-mountain-west', outlineId: '#title-mountain-west-outline', titleId: '#title-mountain-west', start: mountainwestStart, end: mountainwestEnd }
+	    ];
+	
+	    // Check the date and time every second
+	    var interval = setInterval(function() {
+	        var currentDate = new Date();
+	
+	        // Loop through each element
+	        elements.forEach(function(element) {
+	            // Add class if current date is within the specified time range
+	            if (currentDate >= element.start && currentDate <= element.end) {
+	                $(element.factId).addClass('current-fact');
+	                $(element.headlineId).addClass('current-headline');
+	                $(element.carId).addClass('current-progress');
+	                $(element.shapeId).addClass('current-shape').removeClass('past-shape');
+	                $(element.regionId).addClass('current-region-shape').removeClass('active-region-shape');
+	                $(element.titleId).addClass('current-region-title').removeClass('active-region-title');
+	                $(element.outlineId).addClass('current-region-title-outline').removeClass('active-region-title-outline');
+	            } else {
+	                $(element.carId).removeClass('current-progress');
+	                $(element.headlineId).removeClass('current-headline');
+	                $(element.factId).removeClass('current-fact');
+	                if (currentDate < element.start) {
+	                    $(element.shapeId).removeClass('past-shape');
+	                    $(element.regionId).removeClass('active-region-shape');
+	                    $(element.titleId).removeClass('active-region-title');
+	                    $(element.outlineId).removeClass('active-region-title-outline');
+	
+	                } else {
+	                    $(element.shapeId).removeClass('current-shape').addClass('past-shape');
+	                    $(element.regionId).removeClass('current-region-shape').addClass('active-region-shape');
+	                    $(element.titleId).removeClass('current-region-title').addClass('active-region-title');
+	                    $(element.outlineId).removeClass('current-region-title-outline').addClass('active-region-title-outline');
+	
+	                }
+	            }
+	        });
+	
+	        // Stop checking when the end time is reached
+	        if (currentDate > elements[elements.length - 1].end) {
+	            clearInterval(interval);
+	        }
+	    }, 1000); // Check every second
+	});
+	
+
+	var  shapeSoutheast   = document.getElementById('shape-southeast');
+	var  titleSoutheastOutline   = document.getElementById('title-southeast-outline ');
+
+var titleSoutheast = document.querySelector('#title-southeast path');
+//	var  titleSoutheast   = document.getElementById('title-southeast');
+	
+	var  shapePacificNorthwest   = document.getElementById('shape-pacific-northwest');
+	var  titlePacificNorthwestOutline   = document.getElementById('title-pacific-northwest-outline ');
+	var  titlePacificNorthwest   = document.getElementById('title-pacific-northwest');
+	
+	var  shapeNewEngland   = document.getElementById('shape-new-england');
+	var  titleNewEnglandOutline   = document.getElementById('title-new-england-outline');
+	var  titleNewEngland  = document.getElementById('title-new-england');
+	
+	var  shapeAppalachia = document.getElementById('shape-appalachia');
+	var  titleAppalachiaOutline = document.getElementById('title-appalachia-outline');
+	var  titleAppalachia  = document.getElementById('title-appalachia');
+	
+	var  shapeSouthwest	= document.getElementById('shape-southwest');
+	var  titleSouthwestOutline= document.getElementById('title-southwest-outline	');
+	var  titleSouthwest  = document.getElementById('title-southwest');
+	
+	var  shapeFlorida   = document.getElementById('shape-florida');
+	var  titleFloridaOutline   = document.getElementById('title-florida-outline');
+	var  titleFlorida  = document.getElementById('title-florida');
+	
+	var  shapeMidwest = document.getElementById('shape-midwest');
+	var  titleMidwestOutline = document.getElementById('title-midwest-outline');
+	var  titleMidwest   = document.getElementById('title-midwest');
+	
+	var  shapeCalifornia   = document.getElementById('shape-california');
+	var  titleCaliforniaOutline   = document.getElementById('title-california-outline');
+	var  titleCalifornia   = document.getElementById('title-california');
+	
+	var  shapeMidAtlantic   = document.getElementById('shape-mid-atlantic');
+	var  titleMidAtlanticOutline   = document.getElementById('title-mid-atlantic-outline');
+	var  titleMidAtlantic   = document.getElementById('title-mid-atlantic');
+	
+	var  shapeMountainWest   = document.getElementById('shape-mountain-west');
+	var  titleMountainWestOutline   = document.getElementById('title-mountain-west-outline');
+	var  titleMountainWest   = document.getElementById('title-mountain-west');
+
+
+
+
+    function slideScroll(slide){
+        _N2.r('#n2-ss-18', function(){
+        var slider = _N2['#n2-ss-18'];
+        slider.slideToID(slide);
+        });
+    }
+    
+    function handleClick(slide) {
+        return function() {
+            slideScroll(slide);
+        };
+    }
+
+
+    var currentDate = new Date();
+
+	if (currentDate >= southeastStart)	{
+        var slideId = 56;
+	    if (shapeSoutheast) {shapeSoutheast.addEventListener('click', handleClick(56));}
+	    if (titleSoutheastOutline) {titleSoutheastOutline.addEventListener('click', handleClick(56));}
+	    if (titleSoutheast) {titleSoutheast.addEventListener('click', handleClick(56));}
+	    }
+	    
+	if (currentDate >= pacificnorthwestStart)	{
+        var slideId = 57;
+	    if (shapePacificNorthwest) {shapePacificNorthwest.addEventListener('click', handleClick(57));}
+	    if (titlePacificNorthwestOutline) {titlePacificNorthwestOutline.addEventListener('click', handleClick(57));}
+	    if (titlePacificNorthwest) {titlePacificNorthwest.addEventListener('click', handleClick(57));}
+		}
+		
+	if (currentDate >= newenglandStart)	{	
+        var slideId = 58;
+	    if (shapeNewEngland) {shapeNewEngland.addEventListener('click', handleClick(58));}
+	    if (titleNewEnglandOutline) {titleNewEnglandOutline.addEventListener('click', handleClick(58));}
+	    if (titleNewEngland) {titleNewEngland.addEventListener('click', handleClick(58));}
+		}
+		
+	if (currentDate >= appalachiaStart)	{		
+        var slideId = 59;
+	    if (shapeAppalachia	) {shapeAppalachia	.addEventListener('click', handleClick(59));}
+	    if (titleAppalachiaOutline) {titleAppalachiaOutline.addEventListener('click', handleClick(59));}
+	    if (titleAppalachia) {titleAppalachia.addEventListener('click', handleClick(59));}
+		}
+		
+	if (currentDate >= southwestStart)	{
+        var slideId = 60;
+	    if (shapeSouthwest	) {shapeSouthwest	.addEventListener('click', handleClick(60));}
+	    if (titleSouthwestOutline	) {titleSouthwestOutline	.addEventListener('click', handleClick(60));}
+	    if (titleSouthwest) {titleSouthwest.addEventListener('click', handleClick(60));}
+		}
+		
+	if (currentDate >= floridaStart)	{	
+        var slideId = 61;
+	    if (shapeFlorida) {shapeFlorida.addEventListener('click', handleClick(61));}
+	    if (titleFloridaOutline) {titleFloridaOutline.addEventListener('click', handleClick(61));}
+	    if (titleFlorida) {titleFlorida.addEventListener('click', handleClick(61));}
+		}
+		
+	if (currentDate >= midwestStart)	{	
+        var slideId = 62;	    
+	    if (shapeMidwest) {shapeMidwest.addEventListener('click', handleClick(62));}
+	    if (titleMidwestOutline) {titleMidwestOutline.addEventListener('click', handleClick(62));}
+	    if (titleMidwest) {titleMidwest.addEventListener('click', handleClick(62));}
+		}
+		
+	if (currentDate >= californiaStart)	{		
+        var slideId = 63;
+	    if (shapeCalifornia) {shapeCalifornia.addEventListener('click', handleClick(63));}
+	    if (titleCaliforniaOutline) {titleCaliforniaOutline.addEventListener('click', handleClick(63));}
+	    if (titleCalifornia) {titleCalifornia.addEventListener('click', handleClick(63));}
+		}
+
+	if (currentDate >= midatlanticStart)	{
+	            var slideId = 64;
+	    if (shapeMidAtlantic) {shapeMidAtlantic.addEventListener('click', handleClick(64));}
+	    if (titleMidAtlanticOutline) {titleMidAtlanticOutline.addEventListener('click', handleClick(64));}
+	    if (titleMidAtlantic) {titleMidAtlantic.addEventListener('click', handleClick(64));}
+		}
+		
+	if (currentDate >= mountainwestStart)	{	
+        var slideId = 65;
+	    if (shapeMountainWest) {shapeMountainWest.addEventListener('click', handleClick(65));}
+	    if (titleMountainWestOutline) {titleMountainWestOutline.addEventListener('click', handleClick(65));}
+	    if (titleMountainWest) {titleMountainWest.addEventListener('click', handleClick(65));}
+		}
+
+
+    // Scrolls to the correct slide on page load only
+    _N2.r('#n2-ss-18', function(){
+        var slider = _N2['#n2-ss-18'];
+        slider.ready(function(){
+            slider.slideToID(slideId);
+        });
+    });
+    
+
+
+});
+
+
+</script>
